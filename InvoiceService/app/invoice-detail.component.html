@@ -1,0 +1,52 @@
+<div *ngIf="invoice">
+          <h2>{{invoice.InvoiceNumber}} details</h2>
+          <div>
+            <label>number: </label>
+            <input *ngIf="!invoiceIsPaid" [(ngModel)]="invoice.InvoiceNumber" placeholder="invoice number"/>
+            <div *ngIf="invoiceIsPaid">{{invoice.InvoiceNumber}}</div>
+          </div>
+		  <div>
+            <label>client: </label>
+            <input *ngIf="!invoiceIsPaid" [(ngModel)]="invoice.Client" placeholder="invoice client"/>
+              <div *ngIf="invoiceIsPaid">{{invoice.Client}}</div>
+          </div>
+		  <div>
+            <label>date: </label>
+            <input *ngIf="!invoiceIsPaid" id="invoiceDate" [(ngModel)]="invoice.InvoiceDate" placeholder="invoice date"/>
+              <div *ngIf="invoiceIsPaid">{{invoice.InvoiceDate | date: 'dd/MM/yyyy'}}</div>
+          </div>
+		  <div><label>status: </label>{{invoice.Status}}</div>
+		  
+            
+		  <table *ngIf="invoice.Transactions && invoice.Transactions.length > 0" id="invoiceTransactions" class="my-table">
+          <thead>
+              <tr>
+                  <th>Description</th>
+                  <th class="split-row">Unit price</th>
+                  <th>Quantity</th>
+                  <th>VAT(20%)</th>
+                  <th>Total</th>
+                  <th></th>
+              </tr>
+          </thead>
+			<tr *ngFor="let transaction of invoice.Transactions">
+				<td *ngIf="!invoiceIsPaid"><input [(ngModel)]="transaction.Description" placeholder="Item description"/></td>
+				<td *ngIf="!invoiceIsPaid"><input [(ngModel)]="transaction.UnitPrice" placeholder="Item unit price" (keyup)="calculateInvoiceAmounts(transaction)"/></td>
+				<td *ngIf="!invoiceIsPaid"><input [(ngModel)]="transaction.Quantity" placeholder="Quantity" (keyup)="calculateInvoiceAmounts(transaction)"/></td>
+                <td *ngIf="invoiceIsPaid">{{transaction.Description}}</td>
+                <td *ngIf="invoiceIsPaid" class="amount">{{transaction.UnitPrice | formatCurrency}}</td>
+                <td *ngIf="invoiceIsPaid">{{transaction.Quantity}}</td>
+				<td class="amount">{{transaction.Vat | formatCurrency}}</td>
+				<td class="amount">{{transaction.Total | formatCurrency}}</td>
+				<td><button *ngIf="!invoiceIsPaid" (click)="deleteTransaction(transaction)">X</button></td>
+			</tr>		
+		  </table>
+    <div *ngIf="!invoice.Transactions || invoice.Transactions.length == 0"><h3>No invoice item yet...</h3></div>
+    <div><button *ngIf="!invoiceIsPaid" (click)="addTransaction()">Add invoice item</button></div>
+    <div><label>VAT total: </label><span class="amount">{{invoice.VatTotal | formatCurrency}}</span></div>
+    <div><label>Invoice total: </label><span class="amount">{{invoice.Total | formatCurrency}}</span></div>
+		  
+		  <button (click)="goBack()">Back</button>
+		  <button *ngIf="!invoiceIsPaid" (click)="save()">Save</button>
+          <button *ngIf="invoice.Status === 'Unpaid'" (click)="markAsPaid()">Mark as paid</button>
+        </div>

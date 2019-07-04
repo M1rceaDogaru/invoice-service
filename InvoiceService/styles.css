@@ -1,0 +1,144 @@
+/* Master Styles */
+h1 {
+  color: #369; 
+  font-family: Arial, Helvetica, sans-serif;   
+  font-size: 250%;
+}
+h2, h3 { 
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;   
+  font-weight: lighter;
+}
+body { 
+  margin: 2em; 
+}
+body, input[text], button { 
+  color: #888; 
+  font-family: Cambria, Georgia; 
+}
+/* . . . */
+/* everywhere else */
+* { 
+  font-family: Arial, Helvetica, sans-serif; 
+}
+
+input {
+    width: 100%;
+    max-width: 200px;
+}
+
+.amount {
+	text-align: right;
+	padding-left: 1em;
+}
+
+table.my-table th, table.my-table td {
+    border-bottom: 1px solid #ddd;    
+}
+
+table.my-table tr {
+    height: 35px;
+}
+
+table.my-table tr:hover {background-color: #f5f5f5}
+
+select {
+    font-size: 100%;
+    font-weight: lighter;
+}
+
+button {
+      font-family: Arial;
+      background-color: #eee;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer; cursor: hand;
+    }
+    button:hover {
+      background-color: #cfd8dc;
+    }
+    button:disabled {
+      background-color: #eee;
+      color: #ccc; 
+      cursor: auto;
+    }
+
+/*
+	Max width before this PARTICULAR table gets nasty
+	This query will take effect for any screen smaller than 760px
+	and also iPads specifically.*/
+	
+	@media
+	only screen and (max-width: 760px),
+	(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+		/* Force table to not be like tables anymore */
+		table.my-table, table.my-table thead, table.my-table tbody, table.my-table th, table.my-table td, table.my-table tr {
+			display: block;
+		}
+
+		/* Hide table headers (but not display: none;, for accessibility) */
+		table.my-table thead tr {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+		table.my-table tr { 
+            border: 1px solid #ccc; 
+            height: auto;
+		}
+
+		table.my-table td {
+			/* Behave  like a "row" */
+			border: none;
+			border-bottom: 1px solid #eee;
+			position: relative;
+			padding-left: 50%;
+		}
+
+		table.my-table td:before {
+			/* Now like a table header */
+			position: absolute;
+			/* Top/left values mimic padding */
+			top: 2px;
+			left: 6px;
+			width: 45%;
+			padding-right: 10px;
+			white-space: nowrap;
+            text-align: right;
+		}
+
+		/*
+		Label the data
+		*/
+		table#invoiceTransactions td:nth-of-type(1):before { content: "Description"; }
+		table#invoiceTransactions td:nth-of-type(2):before { content: "Unit price"; }
+		table#invoiceTransactions td:nth-of-type(3):before { content: "Quantity"; }
+		table#invoiceTransactions td:nth-of-type(4):before { content: "VAT (20%)"; }
+		table#invoiceTransactions td:nth-of-type(5):before { content: "Total"; }
+
+        table#invoices td:nth-of-type(1):before { content: "Invoice number"; }
+		table#invoices td:nth-of-type(2):before { content: "Client"; }
+		table#invoices td:nth-of-type(3):before { content: "Invoice date"; }
+		table#invoices td:nth-of-type(4):before { content: "Status"; }
+		table#invoices td:nth-of-type(5):before { content: "Total"; }
+	}
+
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen
+	and (min-device-width : 320px)
+	and (max-device-width : 480px) {
+		body {
+			padding: 0;
+			margin: 0;
+			width: 320px; }
+		}
+
+	/* iPads (portrait and landscape) ----------- */
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		body {
+			width: 495px;
+		}
+	}

@@ -1,0 +1,8 @@
+<h1>Latest invoices</h1>
+<div class="grid grid-pad">
+  <div *ngFor="let invoice of invoices" (click)="gotoDetail(invoice)" class="col-1-4">
+    <div class="module hero">
+      <h4 (click)="gotoDetail(invoice)">{{invoice.InvoiceNumber}}</h4>
+    </div>
+  </div>
+</div>
